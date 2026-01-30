@@ -33,7 +33,7 @@ destination = "/tmp/bootstrap.sh" # Destination on EC2
     inline = [ 
          "chmod +x /tmp/bootstrap.sh",
         # "sudo sh /tmp/bootstrap.sh"
-        "sudo sh /tmp/bootstrap.sh mongodb"
+        "sudo sh /tmp/bootstrap.sh"
      ]
   }
 }
