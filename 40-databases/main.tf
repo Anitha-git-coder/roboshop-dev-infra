@@ -25,13 +25,15 @@ connection {
     }
 
 #     # Terraform copies this file to mongodb server
-# provisioner "file" {
-# source = "bootstrap.sh" # Local file path
-# destination = "/tmp/bootstrap.sh" # Destination on EC2
-#}
+provisioner "file" {
+source = "bootstrap.sh" # Local file path
+destination = "/tmp/bootstrap.sh" # Destination on EC2
+}
   provisioner "remote-exec" {
     inline = [ 
-        "echo Hello world"
+         "chmod +x /tmp/bootstrap.sh",
+        # "sudo sh /tmp/bootstrap.sh"
+        "sudo sh /tmp/bootstrap.sh mongodb"
      ]
   }
 }
