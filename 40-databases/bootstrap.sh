@@ -5,5 +5,6 @@
 
 #!/bin/bash
 
+component=$1
 dnf install ansible -y
-ansible-pull -U https://github.com/Anitha-git-coder/ansible-roboshop-roles-terraform.git main.yaml -e component=mongodb
+ansible-pull -U https://github.com/Anitha-git-coder/ansible-roboshop-roles-terraform.git main.yaml -e component=$component
