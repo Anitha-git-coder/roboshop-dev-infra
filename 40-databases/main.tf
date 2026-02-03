@@ -1,4 +1,4 @@
-resource "aws_instance" "mongodb" {
+resource "aws_instance" "mongodb" {  #Terraform creates the MongoDB EC2 instance.
     ami= local.ami_id
     instance_type="t3.micro"
     vpc_security_group_ids = [local.mongodb_sg_id]
@@ -12,11 +12,12 @@ resource "aws_instance" "mongodb" {
   
 }
 
+##Because of triggers_replace, the terraform_data.mongodb resource is tied to that EC2 instance.
 resource "terraform_data" "mongodb" {
   triggers_replace = [
-    aws_instance.mongodb.id
+    aws_instance.mongodb.id   
   ]
-
+ # Terraform connects to the MongoDB instance via SSH (connection block).
 connection {
       type        = "ssh"      
       user        = "ec2-user"
@@ -24,11 +25,13 @@ connection {
       host = aws_instance.mongodb.private_ip      
     }
 
-#     # Terraform copies this file to mongodb server
+
+# File provisioner copies bootstrap.sh from your local machine to /tmp/bootstrap.sh on the MongoDB server.
 provisioner "file" {
 source = "bootstrap.sh" # Local file path
 destination = "/tmp/bootstrap.sh" # Destination on EC2
 }
+# Remote‑exec provisioner runs commands inside the MongoDB server:
   provisioner "remote-exec" {
     inline = [ 
          "chmod +x /tmp/bootstrap.sh",        
