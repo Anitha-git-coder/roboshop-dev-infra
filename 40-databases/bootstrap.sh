@@ -8,4 +8,25 @@
 #Inside bootstrap.sh, Ansible is installed and ansible-pull configures MongoDB.
 component=$1
 dnf install ansible -y
-ansible-pull -U https://github.com/Anitha-git-coder/ansible-roboshop-roles-tf.git main.yaml -e component=$component
+# ansible-pull -U https://github.com/Anitha-git-coder/ansible-roboshop-roles-tf.git main.yaml -e component=$component
+REPO_URL=https://github.com/Anitha-git-coder/ansible-roboshop-roles-tf.git
+REPO_DIR=/opt/roboshop/ansible
+ANSIBLE_DIR=ansible-roboshop-roles-tf  # dir after clone
+
+mkdir -P $REPO_DIR
+mkdir -p /var/log/roboshop/
+touch ansible.log
+
+cd $REPO_DIR
+# check if ansible already clone or not
+
+if[ -d $ANSIBLE_DIR ]; then
+ 
+ cd $ANSIBLE_DIR #open the dir
+ git pull  
+ else
+ git clone $REPO_URL 
+ cd $ANSIBLE_DIR   
+ fi
+
+ansible-playbook -e component=$component main.yaml
