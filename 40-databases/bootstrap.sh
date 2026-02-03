@@ -13,14 +13,14 @@ REPO_URL=https://github.com/Anitha-git-coder/ansible-roboshop-roles-tf.git
 REPO_DIR=/opt/roboshop/ansible
 ANSIBLE_DIR=ansible-roboshop-roles-tf  # dir after clone
 
-mkdir -P $REPO_DIR
+mkdir -p $REPO_DIR
 mkdir -p /var/log/roboshop/
 touch ansible.log
 
 cd $REPO_DIR
 # check if ansible already clone or not
 
-if[ -d $ANSIBLE_DIR ]; then
+if [ -d $ANSIBLE_DIR ]; then
  
  cd $ANSIBLE_DIR #open the dir
  git pull  
