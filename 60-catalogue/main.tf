@@ -39,7 +39,7 @@ destination = "/tmp/catalogue.sh" # Destination on EC2
   provisioner "remote-exec" {
     inline = [ 
          "chmod +x /tmp/catalogue.sh",        
-        "sudo sh /tmp/catalogue.sh catalogue"
+        "sudo sh /tmp/catalogue.sh catalogue ${var.environment}"
      ]
   }
 }
