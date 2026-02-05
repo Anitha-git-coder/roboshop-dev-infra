@@ -5,6 +5,15 @@ variable "project_name" {
 variable "environment" {
     default = "dev"  
 }
+
+variable "domain_name" {
+  default = "anitha.fun"
+}
+
+variable "zone_id" {
+  default = "Z08957613Q2VP6KYK490C"
+}
+
 variable "sg_names" {
   default = [
     #databases
@@ -22,3 +31,5 @@ variable "sg_names" {
 
     ]
 }
+
+
