@@ -173,7 +173,7 @@ resource "aws_autoscaling_policy" "example" {
 
 
 resource "aws_lb_listener_rule" "catalogue" {
-  listener_arn = aws_lb_listener.front_end.arn
+  listener_arn = local.backend_alb_listener_arn
   priority     = 10
 
   action {
