@@ -155,7 +155,7 @@ resource "aws_autoscaling_group" "catalogue" {
 
 }
 
-resource "aws_autoscaling_policy" "example" {
+resource "aws_autoscaling_policy" "catalogue" {
   autoscaling_group_name = aws_autoscaling_group.catalogue.name
   name                   = "${local.common_name_suffix}-catalogue"
   policy_type            = "TargetTrackingScaling"
@@ -172,7 +172,7 @@ resource "aws_autoscaling_policy" "example" {
 }
 
 
-resource "aws_lb_listener_rule" "catalogue" {
+resource "aws_lb_listener_rule" "catalogue_local" {
   listener_arn = local.backend_alb_listener_arn
   priority     = 10
 
@@ -185,5 +185,18 @@ resource "aws_lb_listener_rule" "catalogue" {
     host_header {
       values = ["catalogue.backend-alb-${var.environment}.${var.domain_name}"]
     }
+  }
+}
+
+##Because of triggers_replace, the terraform_data.catalogue resource is tied to that EC2 instance.
+resource "terraform_data" "catalogue" {
+  triggers_replace = [
+    aws_instance.catalogue.id   
+  ]
+  depends_on = [ aws_autoscaling_policy.catalogue ]
+
+# Remote‑exec provisioner runs commands inside the catalogue server:
+  provisioner "local-exec" {
+   command = "aws ec2 terminate-instances --instance-ids ${aws_instance.catalogue.id}"
   }
 }
