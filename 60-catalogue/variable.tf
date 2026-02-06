@@ -16,3 +16,8 @@ variable "environment" {
 # }
 
 
+variable "domain_name" {
+  default = "anitha.fun"
+}
+
+
