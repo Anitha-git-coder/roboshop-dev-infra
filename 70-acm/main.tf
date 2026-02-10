@@ -16,7 +16,7 @@ local.common_tags,
   }
 }
 
-# 2. DNS validation 
+# 2. DNS validation  ,create record in route 53
 resource "aws_route53_record" "roboshop" {
   for_each = {
     for dvo in aws_acm_certificate.roboshop.domain_validation_options : dvo.domain_name => {
