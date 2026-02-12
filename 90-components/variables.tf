@@ -15,6 +15,10 @@ variable "rule_priority" {
 
 }
 
+variable "domain_name" {
+  default = "anitha.fun"
+}
+
 variable "components" {
   default = {
 
